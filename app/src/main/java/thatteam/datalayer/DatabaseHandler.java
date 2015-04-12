@@ -33,6 +33,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // TODO Table Columns names
     private static final String KEY_ID = "id";
     private static final String KEY_TITLE = "title";
+    private static final String KEY_LONG= "long";
+    private static final String KEY_LAT= "lat";
     private static final String KEY_PLACE= "place";
     private static final String KEY_ZONE= "zone";
     private static final String KEY_REMINDER = "reminder";
@@ -67,7 +69,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TODO_TABLE = "CREATE TABLE " + TABLE_TODO + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_TITLE + " TEXT,"
-                + KEY_PLACE + " TEXT," +KEY_REMINDER+" TEXT,"+KEY_ZONE+ " TEXT)";
+                + KEY_PLACE + " TEXT,"+ KEY_LONG + " TEXT,"+ KEY_LAT + " TEXT," +KEY_REMINDER+" TEXT,"+KEY_ZONE+ " TEXT)";
 
         String CREATE_NOTES_TABLE = "CREATE TABLE " + TABLE_NOTES + "(" +
                               KEY_N +" INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_PLACE + " TEXT," +
@@ -110,6 +112,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_PLACE, toDo.getPlace());
         values.put(KEY_ZONE, toDo.getDate());
         values.put(KEY_REMINDER, toDo.getTime());
+        values.put(KEY_LONG, toDo.getLon());
+        values.put(KEY_LAT, toDo.getLat());
 
 
         // Inserting Row

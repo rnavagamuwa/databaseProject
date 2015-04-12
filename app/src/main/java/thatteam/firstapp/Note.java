@@ -9,12 +9,24 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-
+import android.app.Activity;
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import thatteam.datalayer.DatabaseHandler;
 import thatteam.logic.ToDo;
 
 
 public class Note extends ActionBarActivity {
+    private LocationManager locManager;
+    private LocationListener locListener;
+    private Location mobileLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +46,12 @@ public class Note extends ActionBarActivity {
                 EditText txtBoxReminder =(EditText) findViewById(R.id.reminderTxtBox);
                 EditText txtBoxPlace =(EditText) findViewById(R.id.placeTxtBox);
 
+                getCurrentLocation();
+                if (mobileLocation != null) {
+                    locManager.removeUpdates(locListener); // This needs to stop getting the location data and save the battery power.
+                    todo.setLat(mobileLocation.getLatitude());
+                    todo.setLon(mobileLocation.getLongitude());
+                }
                 //set the values in the object obtained
                 todo.setTitle(txtBoxToDo.getText().toString());
                 todo.setDate(txtBoxWhen.getText().toString());
@@ -62,7 +80,33 @@ public class Note extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu_note, menu);
         return true;
     }
+    private void getCurrentLocation() {
+        locManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        locListener = new LocationListener() {
+            @Override
+            public void onStatusChanged(String provider, int status,
+                                        Bundle extras) {
+                // TODO Auto-generated method stub
+            }
 
+            @Override
+            public void onProviderEnabled(String provider) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onLocationChanged(Location location) {
+                // TODO Auto-generated method stub
+                mobileLocation = location;
+            }
+        };
+        locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locListener);
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

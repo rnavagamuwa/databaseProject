@@ -9,6 +9,26 @@ public class ToDo {
     private String place;
     private String date;
     private String time;
+    private double lat;
+    private double lon;
+
+    public void setLat(double lat){
+        this.lat = lat;
+    }
+
+    public void setLon(double lon){
+        this.lon = lon;
+    }
+
+    public String getLat(){
+
+        return Double.toString(lat);
+    }
+
+    public String getLon(){
+
+        return Double.toString(lon);
+    }
 
     public int getId() {
         return id;
