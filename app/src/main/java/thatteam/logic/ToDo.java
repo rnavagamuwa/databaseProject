@@ -20,14 +20,14 @@ public class ToDo {
         this.lon = lon;
     }
 
-    public String getLat(){
+    public double getLat(){
 
-        return Double.toString(lat);
+        return lat;
     }
 
-    public String getLon(){
+    public double getLon(){
 
-        return Double.toString(lon);
+        return lon;
     }
 
     public int getId() {
